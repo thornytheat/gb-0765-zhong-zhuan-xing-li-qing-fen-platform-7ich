@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, render_template, request
+from .config import STAGES
 from .errors import DeskError
 from .input import sample, submission
 from .modules.archive.routes import store
@@ -7,8 +8,8 @@ from .pipeline import compute
 from .reasons import REASONS
 
 DESK = {
-    'scans': '扫描原件', 'legs': '航段候选', 'replay': '扫件回放', 'exceptions': '错载与漏扫',
-    'ledger': '去向对账', 'archive': '批次留档', 'evidence': '联程证据',
+    'scans': '扫描原件', 'legs': '航段候选', 'loading': '装机凭据', 'replay': '扫件回放',
+    'exceptions': '错载与漏扫', 'ledger': '去向对账', 'archive': '批次留档', 'evidence': '联程证据',
 }
 bp = Blueprint('desk', __name__)
 
@@ -25,7 +26,7 @@ def snapshot():
 
 @bp.get('/api/stage/<key>')
 def stage_api(key):
-    if key not in tuple(DESK)[:5]:
+    if key not in STAGES:
         raise DeskError('NO_STAGE', '业务入口不存在', 404)
     run = request.args.get('run')
     if run:
@@ -35,7 +36,7 @@ def stage_api(key):
 
 @bp.post('/api/stage/<key>')
 def inspect_stage(key):
-    if key not in tuple(DESK)[:5]:
+    if key not in STAGES:
         raise DeskError('NO_STAGE', '业务入口不存在', 404)
     return jsonify(compute(submission(request.get_json(silent=True)), until=key))
 

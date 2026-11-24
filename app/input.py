@@ -3,7 +3,7 @@ from .errors import DeskError
 
 
 def sample(name):
-    if name not in ('dirty', 'clean'):
+    if not (SAMPLES / name).is_dir():
         raise DeskError('NO_SAMPLE', '样例不存在', 404)
     return {file: (SAMPLES / name / file).read_bytes().decode('utf-8') for file in FILES}
 
@@ -15,4 +15,4 @@ def submission(body):
         files = body['files']
         if isinstance(files, dict) and set(files) == set(FILES) and all(isinstance(text, str) for text in files.values()):
             return files
-    raise DeskError('BAD_INPUT', '请选择样例或提交三份 CSV')
+    raise DeskError('BAD_INPUT', '请选择样例或提交五份 CSV')

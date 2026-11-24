@@ -6,4 +6,8 @@ REASONS = {
     'NO_LOAD': '缺少计划航段装载证据', 'OFFLOADED': '计划航段末态为撤下',
     'WRONG_LEG': '非计划航段末态为装载', 'MULTI_LOADED': '多个航段同时保持装载',
     'UNLISTED': '行李牌未出现在中转清单', 'UNCERTAIN': '存在未决扫描证据',
+    'CART_UNKNOWN': '车单引用未知航段', 'RECEIPT_UNKNOWN': '整车回执引用未知航段',
+    'CART_DUPLICATE': '同车牌同牌同航段车单重复', 'RECEIPT_DUPLICATE': '同回执号重复且内容矛盾',
+    'RECEIPT_VOID': '整车回执已作废', 'RECEIPT_CART_MISSING': '回执航段无对应车单',
+    'RECEIPT_STATUS': '回执状态取值未知',
 }
